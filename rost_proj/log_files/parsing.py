@@ -34,9 +34,8 @@ def parse_log(filename_path):
     logs.drop(columns=['Time', 'Time_zone'], inplace=True)
     logs[['Request', 'Api', 'Protocol']] = logs['Line1'].str.split(expand=True)
     logs.drop(columns=['Line1'], inplace=True)
-    logs = logs['UserAgent'].apply(parse_user_agent).reset_index(drop=True)
-    logs = pd.concat([logs, df], axis=1)
+    df = logs['UserAgent'].apply(parse_user_agent).reset_index(drop=True)
+    logs = pd.concat([logs,df], axis=1)
 
     return (logs)
 
-parse_log("logs/logfile1.log")

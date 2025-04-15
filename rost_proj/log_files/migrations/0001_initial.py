@@ -14,8 +14,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Api',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('api_id', models.IntegerField()),
+                ('api_id', models.IntegerField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID', default = '0')),
                 ('api_name', models.CharField(max_length=400)),
             ],
         ),

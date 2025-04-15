@@ -2,7 +2,7 @@
 from django.db import models
 
 class Facts_table(models.Model):
-    fact_id = models.IntegerField()
+    fact_id = models.IntegerField(primary_key = True, default = 0)
     id_ip = models.IntegerField()
     id_type = models.IntegerField()
     id_API = models.IntegerField()
@@ -22,7 +22,7 @@ class Clients (models.Model):
          return self.title
 
 class User_agent (models.Model):
-     id_agent = models.IntegerField()
+     id_agent = models.IntegerField(primary_key = True, default = 0)
      id_ip = models.IntegerField()
      os = models.CharField(max_length=1000)
      krnl = models.CharField(max_length=1000)
@@ -35,26 +35,26 @@ class User_agent (models.Model):
          return self.title
 
 class Protocol_version (models.Model):
-     protocol_id = models.IntegerField()
+     protocol_id = models.IntegerField(primary_key = True, default = 0)
      p_name = models.CharField(max_length=10000)
      p_version = models.CharField(max_length=100)
      def __str__(self):
          return self.title
 
 class Request_type (models.Model):
-     type_id = models.IntegerField()
+     type_id = models.IntegerField(primary_key = True, default = 0)
      type_name = models.CharField(max_length=40)
      def __str__(self):
          return self.title
 
 class Api (models.Model):
-     api_id = models.IntegerField()
+     api_id = models.IntegerField(primary_key = True, default = 0)
      api_name = models.CharField(max_length=400)
      def __str__(self):
          return self.title
 
 class Result(models.Model):
-    result_id = models.IntegerField()
+    result_id = models.IntegerField(primary_key = True, default = 0)
     id_code = models.IntegerField()
     result_time = models.TimeField()
     result_byte = models.IntegerField()
@@ -62,13 +62,13 @@ class Result(models.Model):
         return self.title
 
 class Code_type(models.Model):
-    code_id = models.IntegerField()
+    code_id = models.IntegerField(primary_key = True, default = 0)
     code_name = models.CharField(max_length=40)
     def __str__(self):
         return self.title
 
 class Referer(models.Model):
-    ref_id = models.IntegerField()
+    ref_id = models.IntegerField(primary_key = True, default = 0)
     ref_name = models.CharField(max_length=10000)
     def __str__(self):
         return self.title

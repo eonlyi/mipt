@@ -18,6 +18,8 @@ class Clients (models.Model):
      user_id = models.CharField(max_length=10000)
      journal_name = models.CharField(max_length=10000)
      call = models.IntegerField()
+     class Meta:
+         unique_together = (('ip_client', 'user_id', 'journal_name'),)
      def __str__(self):
          return self.title
 
@@ -31,6 +33,8 @@ class User_agent (models.Model):
      html_cmpbl = models.CharField(max_length=10000)
      browser = models.CharField(max_length=10000)
      browser_ver = models.CharField(max_length=100)
+     class Meta:
+         unique_together = (('id_ip', 'os', 'krnl', 'ren_eng','eng_ver', 'html_cmpbl', 'browser', 'browser_ver'),)
      def __str__(self):
          return self.title
 
@@ -38,18 +42,24 @@ class Protocol_version (models.Model):
      protocol_id = models.IntegerField(primary_key = True, default = 0)
      p_name = models.CharField(max_length=10000)
      p_version = models.CharField(max_length=100)
+     class Meta:
+         unique_together = (('p_name', 'p_version'),)
      def __str__(self):
          return self.title
 
 class Request_type (models.Model):
      type_id = models.IntegerField(primary_key = True, default = 0)
      type_name = models.CharField(max_length=40)
+     class Meta:
+         unique_together = (('type_name'),)
      def __str__(self):
          return self.title
 
 class Api (models.Model):
      api_id = models.IntegerField(primary_key = True, default = 0)
      api_name = models.CharField(max_length=400)
+     class Meta:
+         unique_together = (('api_name'),)
      def __str__(self):
          return self.title
 
@@ -64,11 +74,16 @@ class Result(models.Model):
 class Code_type(models.Model):
     code_id = models.IntegerField(primary_key = True, default = 0)
     code_name = models.CharField(max_length=40)
+    class Meta:
+        unique_together = (('code_name'),)
     def __str__(self):
         return self.title
 
 class Referer(models.Model):
     ref_id = models.IntegerField(primary_key = True, default = 0)
     ref_name = models.CharField(max_length=10000)
+    class Meta:
+        unique_together = (('ref_name'),)
     def __str__(self):
         return self.title
+

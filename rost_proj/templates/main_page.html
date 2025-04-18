@@ -1,0 +1,55 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Приложение для анализа логов
+{% endblock %}
+
+{% block page-lead %}
+Что-то еще написать
+{% endblock %}
+
+{% block content %}
+
+<div class="container px-4 py-5" id="project-contents">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+        <div class="col d-flex bg-light-red">
+            <div class="icon-square bg-brown d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <svg class="bi" width="1em" height="1em">
+                    <use xlink:href="#cpu-fill"></use>
+                </svg>
+            </div>
+            <div>
+                <h3 class="fs-2">Загрузка</h3>
+                <p>Форма загрузки файлов логов</p>
+                <a href="/upload_page" class="btn red-btn">Далее</a>
+            </div>
+        </div>
+
+        <div class="col d-flex bg-light-red">
+            <div class="icon-square bg-brown d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <svg class="bi" width="1em" height="1em">
+                    <use xlink:href="#cpu-fill"></use>
+                </svg>
+            </div>
+            <div>
+                <h3 class="fs-2">Дашборд</h3>
+                <p>Статистика по логам</p>
+                <a href="/dashboard_page" class="btn red-btn">Далее</a>
+            </div>
+        </div>
+
+        <div class="col d-flex bg-light-red">
+            <div class="icon-square bg-brown d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
+                <svg class="bi" width="1em" height="1em">
+                    <use xlink:href="#cpu-fill"></use>
+                </svg>
+            </div>
+            <div>
+                <h3 class="fs-2">Отчеты</h3>
+                    <p>Выгрузка отчетов в формате csv</p>
+                    <a href="/report_page" class="btn red-btn">Далее</a>
+            </div>
+        </div>
+
+
+{% endblock %}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+
+    <title>{% block pagetitle %}{% endblock %}</title>
+    <!-- load static -->
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <link rel="icon" href="{% static 'favicon.png' %}" type="image/x-icon">-->
+    <title>Логирование</title>
+    <!-- CSS -->
+    <link href="{% static 'bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        .red-btn {
+            background-color: #bd0502;
+            color: white;
+        }
+        .grey-btn {
+            background-color: #f0f0f0;
+            color: black;
+        }
+        .grey-btn:hover {
+            background-color: #e5e5e5;
+        }
+        .red-btn:hover {
+            background-color: #de8383;
+        }
+    .bg-light-red {
+        background-color: rgba(255, 99, 71, 0.2);
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .bg-brown {
+        background-color: #bd0502;
+        border-radius: 5px;
+    }
+    .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(255, 99, 71, 0.2);
+        }
+        .table-striped tbody tr:nth-of-type(even) {
+            background-color: #ffffff;
+        }
+        .btn-small {
+            width: 200px;
+        }
+
+    </style>
+</head>
+<body>
+<main>
+    <div class="container">
+        <header class="border-bottom">
+            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                <div class="fs-2 mb-3">
+                    <span>Логирование</span>
+                </div>
+            </a>
+        </header>
+        <div class="p-5 mb-4 bg-light rounded-3" id="title-box">
+            <div class="container-fluid py-5">
+                <h1 class="display-1 fw-bold">{% block page-title %}{% endblock %}</h1>
+                <p class="col-md-8 fs-4">{% block page-lead %}{% endblock %}</p>
+            </div>
+        </div>
+        {% block content %}{% endblock %}
+        <footer class="footer pt-3 mt-4 text-muted border-top">© 2025</footer>
+    </div>
+</main>
+</body>
+</html>

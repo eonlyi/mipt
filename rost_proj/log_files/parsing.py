@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import pandas as pd
 
 def parse_user_agent(ua_string):
     data = {
@@ -26,18 +27,17 @@ def parse_user_agent(ua_string):
     return pd.Series(data)
 
 def parse_log(filename_path):
-    column_names = [
-        'IP', 'UserID', 'Journal', 'Date', 'Time', "Time_zone", 'Line1', 'Status',
-        'Byte', 'Referer', 'UserAgent', 'Duration']
-    logs = pd.read_csv(filename_path, delimiter=' ', quotechar='"', engine='python', names=column_names)
-    logs['Date'] = logs['Date'] + ' ' + logs['Time'] + ' ' + logs['Time_zone']
-    logs['Date'] = logs['Date'].str.replace('[', '').str.replace(']','')
-    logs.drop(columns=['Time', 'Time_zone'], inplace=True)
-    logs['Date'] = pd.to_datetime(logs['Date'], format='%Y-%m-%d %H:%M:%S %z', errors='coerce')
-    logs[['Request', 'Api', 'Protocol']] = logs['Line1'].str.split(expand=True)
-    logs.drop(columns=['Line1'], inplace=True)
-    df = logs['UserAgent'].apply(parse_user_agent).reset_index(drop=True)
-    logs = pd.concat([logs,df], axis=1)
+    column_names = ['IP', 'UserID', 'Journal', 'Date', 'Time', "Time_zone", 'Line1', 'Status','Byte', 'Referer', 'UserAgent', 'Duration']
+    logs = pd.read_csv(filename_path, delimiter=' ', quotechar='"', engine='python', names=column_names)
+    logs['Date'] = logs['Date'] + ' ' + logs['Time'] + ' ' + logs['Time_zone']
+    logs['Date'] = logs['Date'].str.replace('[', '').str.replace(']','')
+    logs.drop(columns=['Time', 'Time_zone'], inplace=True)
+    logs['Date'] = pd.to_datetime(logs['Date'], format='%Y-%m-%d %H:%M:%S %z', errors='coerce')
+    logs[['Request', 'Api', 'Protocol']] = logs['Line1'].str.split(expand=True)
+    logs.drop(columns=['Line1'], inplace=True)
+    df = logs['UserAgent'].apply(parse_user_agent).reset_index(drop=True)
+    logs = pd.concat([logs,df], axis=1)
 
     return (logs)
+
 

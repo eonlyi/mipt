@@ -1,45 +1,42 @@
 # Create your models here.
 from django.db import models
 
-class Facts_table(models.Model):
-    fact_id = models.IntegerField(primary_key = True, default = 0)
-    id_ip = models.IntegerField()
-    id_type = models.IntegerField()
-    id_API = models.IntegerField()
-    id_protocol = models.IntegerField()
-    id_result = models.IntegerField()
-    id_referer = models.IntegerField()
-    id_data = models.IntegerField()
+
+class User_agent(models.Model):
+    agent_id = models.AutoField(primary_key=True)
+    os = models.CharField(max_length=1000)
+    krnl = models.CharField(max_length=1000)
+    ren_eng = models.CharField(max_length=1000)
+    eng_ver = models.CharField(max_length=100)
+    html_cmpbl = models.CharField(max_length=10000)
+    browser = models.CharField(max_length=10000)
+    browser_ver = models.CharField(max_length=100)
+
+    class Meta:
+        unique_together = (('os', 'krnl', 'ren_eng', 'eng_ver', 'html_cmpbl', 'browser', 'browser_ver'),)
+
     def __str__(self):
         return self.title
 
+
 class Clients (models.Model):
      ip_client = models.CharField(max_length=20)
-     user_id = models.CharField(max_length=10000)
      journal_name = models.CharField(max_length=10000)
-     call = models.IntegerField()
+     #call = models.IntegerField()
+     id_agent = models.ForeignKey(
+        User_agent,
+        on_delete=models.SET_NULL,  # Changed from SET_DEFAULT
+        null=True,
+        blank=True,
+        db_column='id_agent',  # Must match your DB column
+        to_field='agent_id')
      class Meta:
-         unique_together = (('ip_client', 'user_id', 'journal_name'),)
-     def __str__(self):
-         return self.title
-
-class User_agent (models.Model):
-     id_agent = models.IntegerField(primary_key = True, default = 0)
-     id_ip = models.IntegerField()
-     os = models.CharField(max_length=1000)
-     krnl = models.CharField(max_length=1000)
-     ren_eng = models.CharField(max_length=1000)
-     eng_ver = models.CharField(max_length=100)
-     html_cmpbl = models.CharField(max_length=10000)
-     browser = models.CharField(max_length=10000)
-     browser_ver = models.CharField(max_length=100)
-     class Meta:
-         unique_together = (('id_ip', 'os', 'krnl', 'ren_eng','eng_ver', 'html_cmpbl', 'browser', 'browser_ver'),)
+         unique_together = (('ip_client', 'journal_name'),)
      def __str__(self):
          return self.title
 
 class Protocol_version (models.Model):
-     protocol_id = models.IntegerField(primary_key = True, default = 0)
+     id = models.AutoField(primary_key=True)
      p_name = models.CharField(max_length=10000)
      class Meta:
          unique_together = (('p_name'),)
@@ -47,7 +44,7 @@ class Protocol_version (models.Model):
          return self.title
 
 class Request_type (models.Model):
-     type_id = models.IntegerField(primary_key = True, default = 0)
+     id = models.AutoField(primary_key=True)
      type_name = models.CharField(max_length=40)
      class Meta:
          unique_together = (('type_name'),)
@@ -55,34 +52,58 @@ class Request_type (models.Model):
          return self.title
 
 class Api (models.Model):
-     api_id = models.IntegerField(primary_key = True, default = 0)
+     id = models.AutoField(primary_key=True)
      api_name = models.CharField(max_length=400)
      class Meta:
          unique_together = (('api_name'),)
      def __str__(self):
          return self.title
 
+class Code_type(models.Model):
+    code_id = models.AutoField(primary_key=True)
+    code_name = models.CharField(max_length=40, unique=True)  # Added unique
+
+    class Meta:
+        db_table = 'log_files_code_type'  # Explicit table name
+
+    def __str__(self):  # Fixed double underscore
+        return self.code_name  # Return actual field
+
 class Result(models.Model):
-    result_id = models.IntegerField(primary_key = True, default = 0)
-    id_code = models.IntegerField()
+    id = models.AutoField(primary_key=True)
+    code = models.ForeignKey(
+        Code_type,  # Fixed reference
+        on_delete=models.SET_NULL,  # Changed from SET_DEFAULT
+        null=True,
+        blank=True,
+        db_column='id_code',  # Must match your DB column
+        to_field='code_id'  # Must match referenced field
+    )
     result_time = models.TimeField()
     result_byte = models.IntegerField()
-    def __str__(self):
-        return self.title
 
-class Code_type(models.Model):
-    code_id = models.IntegerField(primary_key = True, default = 0)
-    code_name = models.CharField(max_length=40)
     class Meta:
-        unique_together = (('code_name'),)
+        db_table = 'log_files_result'  # Explicit table name
+
     def __str__(self):
-        return self.title
+        return f"Result {self.id}"
 
 class Referer(models.Model):
-    ref_id = models.IntegerField(primary_key = True, default = 0)
+    id = models.AutoField(primary_key=True)
     ref_name = models.CharField(max_length=10000)
     class Meta:
         unique_together = (('ref_name'),)
+    def __str__(self):
+        return self.title
+
+class Facts_table(models.Model):
+    id_client = models.ForeignKey(Clients, on_delete=models.SET_NULL, null=True, blank=True, db_column='id_client', to_field='id')
+    id_type = models.ForeignKey(Request_type, on_delete=models.SET_NULL, null=True, blank=True, db_column='id_type', to_field='id')
+    id_API = models.ForeignKey(Api, on_delete=models.SET_NULL, null=True, blank=True, db_column='id_API', to_field='id')
+    id_protocol = models.ForeignKey(Protocol_version, on_delete=models.SET_NULL, null=True, blank=True, db_column='id_protocol', to_field='id')
+    id_result = models.ForeignKey(Result,on_delete=models.SET_NULL, null=True, blank=True, db_column='id_result', to_field='id')  # Must match referenced field)
+    id_referer = models.ForeignKey(Referer, on_delete=models.SET_NULL, null=True, blank=True, db_column='id_referer', to_field='id')
+    date = models.DateField(max_length=400, blank=True, null=True, default=None)
     def __str__(self):
         return self.title
 

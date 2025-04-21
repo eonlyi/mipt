@@ -1,15 +1,20 @@
 {% extends "base_page.html" %}
 
 {% block page-title %}
-Загрузка логов
-{% endblock %}
-
-{% block page-lead %}
-Форма для загрузки файла с логами в формате txt
+Загрузка log-файлов
 {% endblock %}
 
 {% block content %}
 
-
+    <h3>Загрузите текстовый файл</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Загрузить файл</button>
+    </form>
+    <h4>После загрузки файла подождите несколько минут, до сообщения об удачной загрузке</h4>
+    {% if success %}
+        <p>Файл успешно загружен в базу данных!</p>
+    {% endif %}
 
 {% endblock %}

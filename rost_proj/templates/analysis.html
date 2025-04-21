@@ -1,0 +1,20 @@
+{% extends "base_page.html" %}
+
+{% block page-title %}
+Распределение по количеству запросов
+{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Тип запроса</th>
+            <th>Количество запросов</th>
+        </tr>
+        {% for status in analysis %}
+        <tr>
+            <td>{{ status.type_name}}</td>
+            <td>{{ status.TotalRequests }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

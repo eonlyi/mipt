@@ -41,9 +41,8 @@ class User_agent (models.Model):
 class Protocol_version (models.Model):
      protocol_id = models.IntegerField(primary_key = True, default = 0)
      p_name = models.CharField(max_length=10000)
-     p_version = models.CharField(max_length=100)
      class Meta:
-         unique_together = (('p_name', 'p_version'),)
+         unique_together = (('p_name'),)
      def __str__(self):
          return self.title
 

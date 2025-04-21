@@ -23,13 +23,7 @@ class Clients (models.Model):
      ip_client = models.CharField(max_length=20)
      journal_name = models.CharField(max_length=10000)
      #call = models.IntegerField()
-     id_agent = models.ForeignKey(
-        User_agent,
-        on_delete=models.SET_NULL,  # Changed from SET_DEFAULT
-        null=True,
-        blank=True,
-        db_column='id_agent',  # Must match your DB column
-        to_field='agent_id')
+     user_id = models.CharField(max_length=20)
      class Meta:
          unique_together = (('ip_client', 'journal_name'),)
      def __str__(self):
@@ -103,6 +97,7 @@ class Facts_table(models.Model):
     id_protocol = models.ForeignKey(Protocol_version, on_delete=models.SET_NULL, null=True, blank=True, db_column='id_protocol', to_field='id')
     id_result = models.ForeignKey(Result,on_delete=models.SET_NULL, null=True, blank=True, db_column='id_result', to_field='id')  # Must match referenced field)
     id_referer = models.ForeignKey(Referer, on_delete=models.SET_NULL, null=True, blank=True, db_column='id_referer', to_field='id')
+    id_agent = models.ForeignKey(User_agent, on_delete=models.SET_NULL, null=True, blank=True, db_column='id_agent', to_field='agent_id')
     date = models.DateField(max_length=400, blank=True, null=True, default=None)
     def __str__(self):
         return self.title

@@ -1,15 +1,15 @@
 {% extends "base_page.html" %}
 
 {% block page-title %}
-Отчеты
-{% endblock %}
-
-{% block page-lead %}
-Экспорт отчета в формате csv
+Экспорт базы данных в формате CSV
 {% endblock %}
 
 {% block content %}
 
-
+    <p>Нажмите на кнопку для загрузки CSV-файла</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Download CSV</button>
+    </form>
 
 {% endblock %}
